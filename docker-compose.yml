@@ -1,0 +1,27 @@
+web:
+  build: .
+  container_name: washdog-web
+  ports:
+    - "8000:80"
+  links:
+    - db
+  volumes:
+    - .:/code
+phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  container_name: washdog-pma
+  links:
+    - db
+  ports:
+    - "8001:80"
+  environment:
+    MYSQL_ROOT_PASSWORD: fypuser
+db:
+  image: "mysql:5"
+  container_name: washdog-db
+  volumes:
+    - ./mysql-config:/etc/mysql/conf.d
+    - ./mysql-init:/docker-entrypoint-initdb.d
+  environment:
+    MYSQL_ROOT_PASSWORD: fypuser
+    MYSQL_DATABASE: fyp
