@@ -1,7 +1,7 @@
 
 create table user (
   id                integer       not null  auto_increment
-, email             varchar(255)  not null
+, email             varchar(255)  not null  unique
 , registrationKey   varchar(255)  not null
 , password          varchar(255)  not null
 , verified          boolean       not null  default FALSE
@@ -10,7 +10,7 @@ create table user (
 
 -- void the API key to logout
 create table access (
-  apiKey            varchar(255)  not null  unique
+  apiKey            varchar(255)  not null
 , userId            integer       not null
 , lastSeen          timestamp     not null  default current_timestamp
 , void              boolean       not null  default FALSE
@@ -21,7 +21,7 @@ create table access (
 -- id = CPU serial number?
 -- null IP = offline?
 create table coordinator (
-  id                varchar(255)  not null  unique
+  id                varchar(255)  not null
 , ipAddress         varchar(255)
 , location          varchar(255)  not null
 , version           varchar(255)  not null
@@ -31,7 +31,7 @@ create table coordinator (
 
 -- id = Bluetooth MAC?
 create table device (
-  id                varchar(255)  not null  unique
+  id                varchar(255)  not null
 , name              varchar(255)  not null
 , coordinatorId     varchar(255)  not null
 , status            enum(
