@@ -6,7 +6,7 @@ use Ramsey\Uuid\Uuid;
 // password: user password
 $app->post('/login', function($req, $resp) {
   $arg = $req->getParsedBody();
-  $selectUser = $this->db->prepare('SELECT id,password FROM user WHERE email = ?');
+  $selectUser = $this->db->prepare('SELECT id,password,verified FROM user WHERE email = ?');
   $selectUser->execute([$arg['email']]);
   $user = $selectUser->fetch();
   if(!$user) {
@@ -14,6 +14,9 @@ $app->post('/login', function($req, $resp) {
   }
   if(!$this->hash->checkPassword($arg['password'], $user['password'])) {
     return $resp->withJson(['error' => 'Invalid password'], 401);
+  }
+  if(!$user['verified']){
+    return $resp->withJson(['error' => 'User not verified.'], 400);
   }
   $apiKey = Uuid::uuid4()->getHex(); // 128-bit hex string
   $this->db->prepare('INSERT INTO access (apiKey, userId) VALUES (?, ?)')->execute([
