@@ -40,6 +40,7 @@ create table device (
                       'washing',
                       'out-of-service'
                     )             not null
+, currentProgress   integer
 , version           varchar(255)  not null
 , lastSeen          timestamp     not null  default current_timestamp
 , primary key (id)
