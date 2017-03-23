@@ -34,6 +34,7 @@ create table device (
   id                varchar(255)  not null
 , name              varchar(255)  not null
 , coordinatorId     varchar(255)  not null
+, washingTine       integer
 , status            enum(
                       'ready',
                       'washing',
@@ -56,6 +57,7 @@ create table job (
                       'finished'
                     )             not null
 , assignedAt        timestamp     not null  default current_timestamp
+, startedAt         timestamp
 , primary key (id)
 , foreign key (userId) references user(id)
 , foreign key (deviceId) references device(id)
