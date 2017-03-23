@@ -34,7 +34,7 @@ create table device (
   id                varchar(255)  not null
 , name              varchar(255)  not null
 , coordinatorId     varchar(255)  not null
-, washingTine       integer
+, washingTime       integer
 , status            enum(
                       'ready',
                       'washing',
