@@ -56,6 +56,7 @@ create table job (
                       'finished'
                     )             not null
 , assignedAt        timestamp     not null  default current_timestamp
+, startedAt         timestamp
 , primary key (id)
 , foreign key (userId) references user(id)
 , foreign key (deviceId) references device(id)
