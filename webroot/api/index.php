@@ -16,6 +16,7 @@ require 'service/hash.php';
 // routes
 require 'route/authentication.php';
 require 'route/registration.php';
+require 'route/StateInquiry.php';
 
 // hello world
 $app->get('/hello/{name}', function($req, $resp) {
