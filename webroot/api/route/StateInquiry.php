@@ -12,6 +12,9 @@ $app->post('/site', function($req, $resp)
 	if($user['void']){
 		return $resp->withJson(['error' => 'Key has been void'], 401);
 	}
+	$this->db->prepare('UPDATE access SET lastSeen = NULL WHERE apiKey = ?')->execute([
+		$arg['apiKey'],
+	]);
 	$selectlocation = $this->db->query('SELECT location FROM coordinator');
 	while($location = $selectlocation->fetch())
 		$results[] = array($location['location']);
@@ -31,7 +34,9 @@ $app->post('/state', function($req, $resp)
 	if($user['void']){
 		return $resp->withJson(['error' => 'Key has been void'], 401);
 	}
-	
+	$this->db->prepare('UPDATE access SET lastSeen = NULL WHERE apiKey = ?')->execute([
+		$arg['apiKey'],
+	]);
 	$selectCoordId = $this->db->prepare('SELECT id FROM coordinator WHERE location = ?');
 	$selectCoordId->execute([$arg['location']]);
 	$coorId = $selectCoordId->fetch();
