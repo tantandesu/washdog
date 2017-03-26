@@ -17,6 +17,7 @@ require 'service/hash.php';
 require 'route/authentication.php';
 require 'route/registration.php';
 require 'route/StateInquiry.php';
+require 'route/DeviceRelated.php';
 
 // hello world
 $app->get('/hello/{name}', function($req, $resp) {
