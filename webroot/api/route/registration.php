@@ -9,6 +9,11 @@ $app->post('/register', function($req, $resp) {
   if(substr(strrchr($arg['email'], "@"), 1) !== 'link.cuhk.edu.hk') {
     return $resp->withJson(['error' => 'Invalid email'], 400);
   }
+  $selectEmail = $this->db->prepare('SELECT COUNT(email) AS count FROM user WHERE email = ?');
+  $selectEmail->execute([$arg['email']]);
+  $exist = $selectEmail->fetch();
+  if($exist['count'] != 0)
+	  return $resp->withJson(['error' => 'This email is already been registered'], 400); 
   $registrationKey = Uuid::uuid4()->getHex();
   $this->db->prepare('INSERT INTO user (email, password, registrationKey) VALUES (?,?,?)')->execute([
     $arg['email'],
